@@ -25,7 +25,7 @@
 </c:if>
 
 <c:if test="${chore eq null}">
-    <h2>Film not found.</h2>
+    <h2>Chore not found.</h2>
 </c:if>
 
 </body>

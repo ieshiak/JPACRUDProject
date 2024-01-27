@@ -9,4 +9,11 @@ public interface ChoreDAO {
 	Chore findById(int choreid);
 
 	List<Chore> findAll();
+	
+	Chore createChore(Chore chore);
+
+    Chore updateChore(Chore chore);
+
+    boolean deleteChore(int id);
+
 }
