@@ -10,8 +10,9 @@ import jakarta.persistence.Id;
 public class Chore {
 
 	 @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private int id;
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 @Column(name = "id")
+	 	private int id;
 
 	    private String title;
 

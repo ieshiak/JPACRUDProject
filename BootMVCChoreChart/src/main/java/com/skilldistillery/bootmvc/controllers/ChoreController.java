@@ -7,12 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.bootmvc.data.ChoreDAO;
 import com.skilldistillery.jpachorechart.entities.Chore;
@@ -55,36 +52,63 @@ public class ChoreController {
     @GetMapping("/add")
     public String addChoreForm(Model model) {
         model.addAttribute("chore", new Chore());
+        model.addAttribute("choreAdded", false); // Initialize choreAdded attribute
         return "chore/add";
     }
 
-    @PostMapping("/add")
-    public String addChore(@ModelAttribute Chore chore, Model model) {
-        Chore newChore = choreDAO.createChore(chore);
-        model.addAttribute("chore", newChore);
-        return "redirect:/choreList";
+    @PostMapping("/addChore")
+    public String addChore(Chore chore, Model model) {
+        try {
+            Chore newChore = choreDAO.createChore(chore);
+
+            if (newChore != null) {
+                model.addAttribute("choreAdded", true);
+                model.addAttribute("newChore", newChore);
+            } else {
+                model.addAttribute("choreAdded", false);
+            }
+
+            return "chore/add";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "An unexpected error occurred.");
+            return "error";
+        }
     }
 
+    @GetMapping("/choreAdded")
+    public String showChoreAddedPage(@ModelAttribute("choreAdded") Boolean choreAdded,
+                                     @ModelAttribute("newChore") Chore newChore,
+                                     Model model) {
+        model.addAttribute("choreAdded", choreAdded);
+        model.addAttribute("newChore", newChore);
+        
+        System.out.println("choreAdded: " + choreAdded);
+        System.out.println("newChore: " + newChore);
 
-
-    @GetMapping("/edit/{id}")
-    public String editChoreForm(@PathVariable int id, Model model) {
-        Chore chore = choreDAO.findById(id);
-        model.addAttribute("chore", chore);
-        return "chore/edit";
+        return "chore/add";
     }
-
-    @PostMapping("/edit/{id}")
-    public String editChore(@PathVariable int id, @ModelAttribute Chore chore) {
-        chore.setId(id);
-        choreDAO.updateChore(chore);
-        return "redirect:/choreList";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteChore(@PathVariable int id) {
-        choreDAO.deleteChore(id);
-        return "redirect:/choreList";
-    }
-
 }
+
+
+//    @GetMapping("/edit/{id}")
+//    public String editChoreForm(@PathVariable int id, Model model) {
+//        Chore chore = choreDAO.findById(id);
+//        model.addAttribute("chore", chore);
+//        return "chore/edit";
+//    }
+//
+//    @PostMapping("/edit/{id}")
+//    public String editChore(@PathVariable int id, @ModelAttribute Chore chore) {
+//        chore.setId(id);
+//        choreDAO.updateChore(chore);
+//        return "redirect:/choreList";
+//    }
+//
+//    @GetMapping("/delete/{id}")
+//    public String deleteChore(@PathVariable int id) {
+//        choreDAO.deleteChore(id);
+//        return "redirect:/choreList";
+//    }
+//
+//}

@@ -33,7 +33,7 @@ USE `chore` ;
 DROP TABLE IF EXISTS `chore` ;
 
 CREATE TABLE IF NOT EXISTS `chore` (
-  `id` INT(10) NOT NULL,
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(200) NOT NULL,
   `description` VARCHAR(2000) NOT NULL,
   `room` VARCHAR(45) NOT NULL,
@@ -53,7 +53,7 @@ USE `chore` ;
 DROP TABLE IF EXISTS `chore` ;
 
 CREATE TABLE IF NOT EXISTS `chore` (
-  `id` INT(10) NOT NULL,
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(200) NOT NULL,
   `description` VARCHAR(2000) NOT NULL,
   `room` VARCHAR(45) NOT NULL,
@@ -77,13 +77,3 @@ GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'parent'@'localhost'
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `chore`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `chore`;
-INSERT INTO `chore` (`id`, `title`, `description`, `room`, `frequency_weekday`, `difficulty_ranking`, `tool`, `instructions`, `additional_information`) VALUES (1, 'Clean Shower', 'Scrub tiles and clean shower fixtures', 'Bathroom', 'Saturday', 'Moderate', 'Bathroom Cleaner, Sponge, Squeegee', 'Use a bathroom cleaner to scrub tiles and clean fixtures. Wipe dry with a squeegee for a streak-free finish.', 'Ensure proper ventilation while cleaning.');
-
-COMMIT;
-
