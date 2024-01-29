@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.skilldistillery.jpachorechart.entities.Chore;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
@@ -38,8 +40,10 @@ public class ChoreDAOImpl implements ChoreDAO {
     }
 
     @Override
+    @Transactional 
     public Chore updateChore(Chore chore) {
         Chore managed = em.find(Chore.class, chore.getId());
+
         if (managed != null) {
             managed.setTitle(chore.getTitle());
             managed.setRoom(chore.getRoom());
@@ -47,19 +51,31 @@ public class ChoreDAOImpl implements ChoreDAO {
             managed.setDifficultyRanking(chore.getDifficultyRanking());
             managed.setTool(chore.getTool());
             managed.setInstructions(chore.getInstructions());
+            managed.setDescription(chore.getDescription());
             managed.setAdditionalInformation(chore.getAdditionalInformation());
-            
+
+            System.out.println("Chore with ID " + chore.getId() + " updated successfully.");
+        } else {
+            System.out.println("Chore not found with ID: " + chore.getId());
         }
+
         return managed;
     }
 
     @Override
-    public boolean deleteChore(int id) {
-        Chore chore = em.find(Chore.class, id);
-        if (chore != null) {
-            em.remove(chore);
-            return true;
+    @Transactional
+    public boolean destroy(int id) {
+        Chore choreToDelete = findById(id);
+
+        if (choreToDelete != null) {
+            try {
+                em.remove(choreToDelete);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         return false;
     }
 }

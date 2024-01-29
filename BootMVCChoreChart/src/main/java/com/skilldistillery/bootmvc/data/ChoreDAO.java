@@ -14,6 +14,6 @@ public interface ChoreDAO {
 
     Chore updateChore(Chore chore);
 
-    boolean deleteChore(int id);
+	boolean destroy(int id);
 
 }
