@@ -2,9 +2,14 @@
 <html>
 <head>
     <title>Edit Chore</title>
+    <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous">
 </head>
 <body>
-
+ <div>
     <h2>Edit Chore</h2>
 
    <form method="post" action="/submitEditChore">
@@ -35,6 +40,7 @@
     <textarea id="additionalInformation" name="additionalInformation">${editedChore.additionalInformation}</textarea><br/>
 
     <input type="submit" value="Submit"/>
+     </div>
 </form>
 
 
